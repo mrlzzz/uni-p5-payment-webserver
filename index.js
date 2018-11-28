@@ -18,6 +18,7 @@ app.post("/post", function(req, res){
     one = req.body.name;
     two = req.body.text;
     console.log("POST request received.")
+    res.write("Client sucks.")
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
