@@ -13,7 +13,6 @@ let two = '';
 app.get('/', function(req, res){
 
     res.send("One: " + one);
-    one = 'to ja :D';
 
 });
 
