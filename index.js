@@ -1,3 +1,5 @@
+//config
+
 const express = require('express')
 const app = express()
 
@@ -5,20 +7,28 @@ const port = process.env.PORT
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-let one = 'to ja :D';
-let two = "";
+
+
+
+
+
+//logic
+
+let result = "Unknown, send me something from QT";
 
 app.get('/', function(req, res){
-    res.send("One: " + one);
+    res.send("Result: " + result);
 });
 
 app.post("/post", function(req, res){
-    one = req.body.name;
-    two = req.body.text;
+    result = req.body.result;
+    
     console.log("POST request received.")
-    res.write("Client sucks.")
+
+	res.send("Accepted");
+
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
