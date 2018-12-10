@@ -16,7 +16,21 @@ app.use(bodyParser.json());
 
 //logic
 
-let result = "Unknown, send me something from QT";
+let response = "Unknown, send me something from QT";
+
+function verify(r){
+
+	if(r === "Accepted") {
+	
+		response = "Accepted";	
+
+	} else { 
+
+		response = "Rejected";	
+	
+	}
+
+}
 
 app.get('/', function(req, res){
     res.send("Result: " + result);
@@ -25,10 +39,10 @@ app.get('/', function(req, res){
 app.post("/post", function(req, res){
     result = req.body.result;
     
+	verify(result);
     console.log("POST request received.")
 
-	res.send("Accepted");
-
+	res.send(response);
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
