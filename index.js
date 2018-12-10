@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 //logic
 
 let response = "Unknown, send me something from QT";
+let result = "";
 
 function verify(r){
 
