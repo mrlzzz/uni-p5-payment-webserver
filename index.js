@@ -89,6 +89,7 @@ admin.database().ref('/').set({
 let response = "Unknown, send me something from QT";
 let timestamp = "";
 let pin = "";
+let result = "";
 
 function verify(r){
 
