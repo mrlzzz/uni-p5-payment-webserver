@@ -46,7 +46,7 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 
 	console.log("Transaction pushed, congratulations!");
 }
-s
+
 function verifyTransaction(pan, pin, amount){
 
 	users.on('value', function(snapshot) {
