@@ -55,16 +55,21 @@ function verifyTransaction(pan, pin, amount){
 			let user = child.val().CreditCard
 
 			if(user.PAN === pan ){
+				
 				console.log("Found corresponding PAN."); 
 
 				if(user.PIN === pin) {
+					
 					console.log("PIN is correct");
 
 					if(user.Amount >= amount){
 
+						console.log("EEEEEEEEEEEEJ" + typeof user.Amount);
+						console.log("EEEEEEEEEEEEJ" + typeof amount);
 						let tempAmount = user.Amount - amount;
 						child.child("/CreditCard/Amount").ref.set(tempAmount);
 						console.log("Sufficient funds.");
+
 					} else console.log("Insufficient funds.");
 
 				}	else console.log("Incorrect PIN");
