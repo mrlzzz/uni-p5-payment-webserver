@@ -59,6 +59,11 @@ function verifyTransaction(pan, pin, amount){
 
 				if(user.PIN === pin) {
 					console.log("PIN is correct");
+
+					if(user.Amount >= amount){
+						console.log("Sufficient funds.");
+					} else console.log("Insufficient funds.");
+
 				}	else console.log("Incorrect PIN");
 
 			} else console.log("Corresponding PAN not found.");
