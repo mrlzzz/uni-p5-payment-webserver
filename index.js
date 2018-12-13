@@ -61,7 +61,7 @@ function verifyTransaction(pan, pin, amount){
 					console.log("PIN is correct");
 
 					if(user.Amount >= amount){
-						user.Amount.ref().update("215");
+						child.ref.update({Amount: "215"});
 						console.log("Sufficient funds.");
 					} else console.log("Insufficient funds.");
 
