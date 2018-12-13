@@ -54,10 +54,14 @@ function verifyTransaction(pan, pin, amount){
 
 			let user = child.val().CreditCard
 
-			if(user.PAN === pan && user.PIN === pin && (user.amount >= amount)){
-				user.amount = user.amount - amount
-				console.log("Transaction accepted."); 	
-			} else console.log("Transaction rejected.");
+			if(user.PAN === pan ){
+				console.log("Found corresponding PAN."); 
+
+				if(user.PIN === pin) {
+					console.log("PIN is correct");
+				}	else console.log("Incorrect PIN");
+
+			} else console.log("Corresponding PAN not found.");
 			
 	  	});
 	});
