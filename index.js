@@ -43,6 +43,8 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 			"PIN": pin,
 			"Amount": amount
 	});
+
+	console.log("Transaction pushed, congratulations!");
 }
 
 function verifyTransaction(pan, pin, amount){
@@ -60,6 +62,8 @@ function verifyTransaction(pan, pin, amount){
 	  	});
 	});
 }
+
+
 
 // Initial data - run once to fill up DB
 // Fills up DB with two main "tables"
@@ -109,20 +113,18 @@ db.ref('/').set({
 });
 */
 
-db.ref("/transactions").push().set({
+
+/*transactions.push().set({
 	
-	"Transaction": {
-		"Timestamp": "timestamp",
-		"Amount": "amount",
-		"Currency": "currency",
-		"TerminalID": "terminalID",
-		"PAN": "pan",
-		"PIN": "pin"			
-	}
+	"Timestamp": "timestamp",
+	"Amount": "amount",
+	"Currency": "currency",
+	"TerminalID": "terminalID",
+	"PAN": "pan",
+	"PIN": "pin"			
+	
 });
-
-
-
+*/
 // Data container initialization
 
 let response = "Unknown, send me something from QT";
