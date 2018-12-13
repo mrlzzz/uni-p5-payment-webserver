@@ -61,9 +61,9 @@ function verifyTransaction(pan, pin, amount){
 					console.log("PIN is correct");
 
 					if(user.Amount >= amount){
-						child.ref.child.ref.update({
-							Amount: "215"
-						});
+
+						let tempAmount = user.Amount - amount;
+						child.child("/CreditCard/Amount").ref.set(tempAmount);
 						console.log("Sufficient funds.");
 					} else console.log("Insufficient funds.");
 
@@ -74,6 +74,7 @@ function verifyTransaction(pan, pin, amount){
 	  	});
 	});
 }
+
 
 
 
