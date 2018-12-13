@@ -69,7 +69,7 @@ function verifyTransaction(pan, pin, amount){
 
 				}	else console.log("Incorrect PIN");
 
-			} else console.log("Corresponding PAN not found.");
+			} else console.log("CorresponNding PAN not found.");
 			
 	  	});
 	});
