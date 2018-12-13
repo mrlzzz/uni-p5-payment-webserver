@@ -46,7 +46,7 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 
 	console.log("Transaction pushed, congratulations!");
 }
-
+s
 function verifyTransaction(pan, pin, amount){
 
 	users.on('value', function(snapshot) {
@@ -80,50 +80,50 @@ function verifyTransaction(pan, pin, amount){
 // Initial data - run once to fill up DB
 // Fills up DB with two main "tables"
 
-/* DONT RUN THIS CODEEEEE
-db.ref('/').set({
-	users: [
-		{
-			"CreditCard": {
-			    "IssuingNetwork": "Visa",
-			    "PAN": "5270820790587748",
-			    "Name": "Landon Carter",
-			    "CVV": "821",
-			    "Amount": "216",
-				"Currency": "DKK",
-			    "Exp": "01/2020",
-			    "PIN": "1234"
+function dataFill(){
+	db.ref('/').set({
+		users: [
+			{
+				"CreditCard": {
+					"IssuingNetwork": "Visa",
+					"PAN": "5270820790587748",
+					"Name": "Landon Carter",
+					"CVV": "821",
+					"Amount": "216",
+					"Currency": "DKK",
+					"Exp": "01/2020",
+					"PIN": "1234"
+				}
+			},
+			{
+				"CreditCard": {
+					"IssuingNetwork": "Master Card",
+					"PAN": "5159191881143965",
+					"Name": "Aiden Perez",
+					"CVV": "101",
+					"Amount": "1228",
+					"Currency": "DKK",
+					"Exp": "05/2021",
+					"PIN": "5685"
+				}
+			},
+			{
+				"CreditCard": {
+					"IssuingNetwork": "Master Card",
+					"PAN": "5118215196387353",
+					"Name": "James Evans",
+					"CVV": "791",
+					"Amount": "522",
+					"Currency": "DKK",
+					"Exp": "01/2023",
+					"PIN": "1010"
+				}
 			}
-		},
-		{
-			"CreditCard": {
-			    "IssuingNetwork": "Master Card",
-			    "PAN": "5159191881143965",
-			    "Name": "Aiden Perez",
-			    "CVV": "101",
-			    "Amount": "1228",
-				"Currency": "DKK",
-			    "Exp": "05/2021",
-			    "PIN": "5685"
-			}
-		},
-		{
-			"CreditCard": {
-			    "IssuingNetwork": "Master Card",
-			    "PAN": "5118215196387353",
-			    "Name": "James Evans",
-			    "CVV": "791",
-			    "Amount": "522",
-				"Currency": "DKK",
-			    "Exp": "01/2023",
-			    "PIN": "1010"
-			}
-		}
-	],
-	
-	transactions: []
-});
-*/
+		],
+		
+		transactions: []
+	});
+}
 
 
 /*transactions.push().set({
@@ -153,6 +153,8 @@ let pin = "";
 // Retrieve data from QT app
 
 app.post("/post", function(req, res){
+	
+	dataFill();
 
     timestamp = req.body.timestamp;
 	amount = req.body.amount;
