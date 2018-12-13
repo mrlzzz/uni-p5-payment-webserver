@@ -1,10 +1,9 @@
-//config
+// Express config
 
 const express = require('express')
 const admin = require('firebase-admin');
 
 const app = express()
-
 const port = process.env.PORT
 const bodyParser = require('body-parser');
 
@@ -12,112 +11,159 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-//firebase config
-
-
-
-
+// Firebase config
 
 admin.initializeApp({
-  credential: admin.credential.cert('paymentapp-fd05e-firebase-adminsdk-6ux8g-bc9c07222c.json'),
-  databaseURL: "https://paymentapp-fd05e.firebaseio.com"
+	credential: admin.credential.cert('paymentapp-fd05e-firebase-adminsdk-6ux8g-bc9c07222c.json'),
+ 	databaseURL: "https://paymentapp-fd05e.firebaseio.com"
 });
 
-function pushToDb(timestamp, pin){
+const db = admin.database();
 
-	admin.database().ref("/transactions").set(
-	
-		{
-		"Timestamp": timestamp,
-		"PIN": pin
-		}
-	
-	);
 
+
+
+
+
+
+// Firebase logic
+
+let users = db.ref("/users");
+let transactions = db.ref("/transactions");
+
+function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
+
+	transactions.push().set({
+			
+			"Timestamp": timestamp,
+			"Amount": amount,
+			"Currency": currency,
+			"TerminalID": terminalID,
+			"PAN": pan,
+			"PIN": pin,
+			"Amount": amount
+	});
 }
 
+function verifyTransaction(pan, pin, amount){
 
-admin.database().ref('/').set({
-    	users: [
-			{
-				"CreditCard": {
-				    "IssuingNetwork": "Master Card",
-				    "CardNumber": "5270820790587748",
-				    "Name": "Landon Carter",
-				    "CVV": "821",
-				    "Limit": "216$",
-				    "Exp": "01/2020",
-				    "PIN": "1234"
-				}
-			},
-			{
-				"CreditCard": {
-				    "IssuingNetwork": "Master Card",
-				    "CardNumber": "5159191881143965",
-				    "Name": "Aiden Perez",
-				    "CVV": "101",
-				    "Limit": "1228$",
-				    "Exp": "05/2021",
-				    "PIN": "5685"
-				}
-			},
-			{
-				"CreditCard": {
-				    "IssuingNetwork": "Master Card",
-				    "CardNumber": "5118215196387353",
-				    "Name": "James Evans",
-				    "CVV": "791",
-				    "Limit": "522$",
-				    "Exp": "01/2023",
-				    "PIN": "1010"
-				}
+	users.on('value', function(snapshot) {
+		snapshot.forEach(function(child) {
+
+			let user = child.val().CreditCard
+
+			if(user.PAN === pan && user.PIN === pin && (user.amount >= amount)){
+				user.amount = user.amount - amount
+				console.log("Transaction accepted."); 	
+			} else console.log("Transaction rejected.");
+			
+	  	});
+	});
+}
+
+// Initial data - run once to fill up DB
+// Fills up DB with two main "tables"
+
+/* DONT RUN THIS CODEEEEE
+db.ref('/').set({
+	users: [
+		{
+			"CreditCard": {
+			    "IssuingNetwork": "Visa",
+			    "PAN": "5270820790587748",
+			    "Name": "Landon Carter",
+			    "CVV": "821",
+			    "Amount": "216",
+				"Currency": "DKK",
+			    "Exp": "01/2020",
+			    "PIN": "1234"
 			}
-		],
-		
-		transactions: ""
-    });
+		},
+		{
+			"CreditCard": {
+			    "IssuingNetwork": "Master Card",
+			    "PAN": "5159191881143965",
+			    "Name": "Aiden Perez",
+			    "CVV": "101",
+			    "Amount": "1228",
+				"Currency": "DKK",
+			    "Exp": "05/2021",
+			    "PIN": "5685"
+			}
+		},
+		{
+			"CreditCard": {
+			    "IssuingNetwork": "Master Card",
+			    "PAN": "5118215196387353",
+			    "Name": "James Evans",
+			    "CVV": "791",
+			    "Amount": "522",
+				"Currency": "DKK",
+			    "Exp": "01/2023",
+			    "PIN": "1010"
+			}
+		}
+	],
+	
+	transactions: []
+});
+*/
+/*
+db.ref("/transactions").push().set({
+	
+	"Transaction": {
+		"Timestamp": "timestamp",
+		"Amount": "amount",
+		"Currency": "currency",
+		"TerminalID": "terminalID",
+		"PAN": "pan",
+		"PIN": "pin"			
+	}
+});
+*/
 
 
-
-
-
-
-
-
-//logic
+// Data container initialization
 
 let response = "Unknown, send me something from QT";
+let result = "No idea why is it here";
+
 let timestamp = "";
+let amount = "";
+let currency = "";
+let terminalID = "";
+let pan = "";
 let pin = "";
-let result = "";
 
-function verify(r){
 
-	if(r === "Accepted") {
-	
-		response = "Accepted";	
-
-	} else { 
-
-		response = "Rejected";	
-	
-	}
-
-}
-
-app.get('/', function(req, res){
-    res.send("Result: " + result);
-});
+// Retrieve data from QT app
 
 app.post("/post", function(req, res){
+
     timestamp = req.body.timestamp;
+	amount = req.body.amount;
+	currency = req.body.currency;
+	terminalID = req.body.terminalID;
+	pan = req.body.pan;
     pin = req.body.pin;
     
-	pushToDb(timestamp, pin);
+	pushTransaction(timestamp, amount, currency, terminalID, pan, pin);
+	verifyTransaction(pan, pin, amount);
+
     console.log("POST request received.")
 
-	res.send("Sent to DB, hopefully");
+	// Response to QT app
+
+	res.send("Sent to DB, hopefully.");
 })
+
+// Basic routing, HTTP GET and POST methods
+
+app.get('/', function(req, res){
+
+    res.send("Result: " + result);
+
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
