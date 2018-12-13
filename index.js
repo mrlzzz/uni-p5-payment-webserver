@@ -54,8 +54,8 @@ function verifyTransaction(pan, pin, amount){
 
 			if(user.PAN === pan && user.PIN === pin && (user.amount >= amount)){
 				user.amount = user.amount - amount
-				console.log("Transaction accepted."); 	
-			} else console.log("Transaction rejected.");
+				res.send("Transaction accepted."); 	
+			} else res.send("Transaction rejected.");
 			
 	  	});
 	});
@@ -108,7 +108,7 @@ db.ref('/').set({
 	transactions: []
 });
 */
-/*
+
 db.ref("/transactions").push().set({
 	
 	"Transaction": {
@@ -120,7 +120,7 @@ db.ref("/transactions").push().set({
 		"PIN": "pin"			
 	}
 });
-*/
+
 
 
 // Data container initialization
