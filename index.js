@@ -69,11 +69,11 @@ function verifyTransaction(pan, pin, amount){
 						let tempAmount = int1 - int2;
 						let t = '' + tempAmount;						
 
-						console.log("EEEEJ" + typeof(user.Amount));
-						console.log("EEEEJ" + typeof(amount));
-						console.log("EEEEJ" + typeof(int1));
-						console.log("EEEEJ" + typeof(int2));
-						console.log("EEEEJ" + typeof(tempAmount));
+						console.log("EEEEJ" + typeof(user.Amount) + user.Amount);
+						console.log("EEEEJ" + typeof(amount) + amount);
+						console.log("EEEEJ" + typeof(int1) + int1);
+						console.log("EEEEJ" + typeof(int2) + int2);
+						console.log("EEEEJ" + typeof(tempAmount) + tempAmount);
 
 						child.child("/CreditCard/Amount").ref.set(t);
 						console.log("Sufficient funds.");
