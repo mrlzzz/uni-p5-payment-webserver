@@ -174,7 +174,7 @@ let pin = "";
 
 app.post("/post", function(req, res){
 	
-	dataFill();
+	//dataFill();
 
     timestamp = req.body.timestamp;
 	amount = req.body.amount;
