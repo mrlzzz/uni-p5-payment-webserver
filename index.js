@@ -62,9 +62,13 @@ function verifyTransaction(pan, pin, amount){
 					
 					console.log("PIN is correct");
 
-					if(user.Amount >= amount){						
+					if(user.Amount >= amount){
+
+						let int1 = parseInt(user.Amount, 10);
+						let int2 = parseInt(amount, 10);
+						let tempAmount = int1 - int2;
+						let t = '' + tempAmount;						
 						
-						substract(user.Amount, amount);
 						snapChild.child("CreditCard/Amount").ref.set(t);
 						console.log("Sufficient funds.");
 						return true;
@@ -79,6 +83,41 @@ function verifyTransaction(pan, pin, amount){
 	});
 }
 
+/*
+
+let amount1 = "2";
+let pin1 = "1234";
+let pan2 = "5270820790587748";
+console.log("Verification loading...");
+	users.once('value', function(snapshot) {
+		snapshot.forEach(function(snapChild) {
+
+			let user = snapChild.val().CreditCard
+
+			if(user.PAN === pan1 ){
+				
+				console.log("Found corresponding PAN."); 
+
+				if(user.PIN === pin1) {
+					
+					console.log("PIN is correct");
+
+					if(user.Amount >= amount1){						
+						
+						substract(user.Amount, amount1);
+						snapChild.child("CreditCard/Amount").ref.set(t);
+						console.log("Sufficient funds.");
+						return true;
+
+					} else console.log("Insufficient funds.");
+
+				} else console.log("Incorrect PIN");
+
+			} else console.log("CorresponNding PAN not found.");
+			
+	  	});
+	});
+*/
 
 
 
