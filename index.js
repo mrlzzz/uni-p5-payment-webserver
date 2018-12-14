@@ -184,9 +184,10 @@ app.post("/post", function(req, res){
     pin = req.body.pin;
     
 	pushTransaction(timestamp, amount, currency, terminalID, pan, pin);
+	console.log("1");
 	verifyTransaction(pan, pin, amount);
-
-    console.log("POST request received.")
+	console.log("2");
+    console.log("POST request received.");
 
 	// Response to QT app
 
