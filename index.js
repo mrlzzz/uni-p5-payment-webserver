@@ -50,9 +50,9 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 function verifyTransaction(pan, pin, amount){
 
 	users.on('value', function(snapshot) {
-		snapshot.forEach(function(child) {
+		snapshot.forEach(function(snapChild) {
 
-			let user = child.val().CreditCard
+			let user = snapChild.val().CreditCard
 
 			if(user.PAN === pan ){
 				
@@ -75,7 +75,7 @@ function verifyTransaction(pan, pin, amount){
 						console.log("EEEEJ" + typeof(int2) + int2);
 						console.log("EEEEJ" + typeof(tempAmount) + tempAmount);
 
-						//child.child("/CreditCard/Amount").ref.set(t);
+						snapChild.child("/CreditCard/Amount").ref.set(t);
 						console.log("Sufficient funds.");
 						return true;
 
