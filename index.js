@@ -77,6 +77,7 @@ function verifyTransaction(pan, pin, amount){
 
 						child.child("/CreditCard/Amount").ref.set(t);
 						console.log("Sufficient funds.");
+						return true;
 
 					} else console.log("Insufficient funds.");
 
