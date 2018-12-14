@@ -75,7 +75,10 @@ function verifyTransaction(pan, pin, amount){
 						console.log("EEEEJ" + typeof(int2) + int2);
 						console.log("EEEEJ" + typeof(tempAmount) + tempAmount);
 
-						snapChild.child("/CreditCard/Amount").ref.set(t);
+						snapChild.child("/CreditCard/Amount").ref.set(t)
+							.then(function() {
+							return true;						
+						});
 						console.log("Sufficient funds.");
 						return true;
 
