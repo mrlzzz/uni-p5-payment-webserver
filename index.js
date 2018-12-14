@@ -67,7 +67,7 @@ function verifyTransaction(pan, pin, amount){
 						let int1 = parseInt(user.Amount, 10);
 						let int2 = parseInt(amount, 10);
 						let tempAmount = int1 - int2;
-						tempAmount.toString();
+						let t = '' + tempAmount;						
 
 						console.log("EEEEJ" + typeof(user.Amount));
 						console.log("EEEEJ" + typeof(amount));
@@ -75,7 +75,7 @@ function verifyTransaction(pan, pin, amount){
 						console.log("EEEEJ" + typeof(int2));
 						console.log("EEEEJ" + typeof(tempAmount));
 
-						child.child("/CreditCard/Amount").ref.set("2");
+						child.child("/CreditCard/Amount").ref.set(t);
 						console.log("Sufficient funds.");
 
 					} else console.log("Insufficient funds.");
