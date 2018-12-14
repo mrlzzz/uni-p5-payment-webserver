@@ -41,7 +41,7 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 			"TerminalID": terminalID,
 			"PAN": pan,
 			"PIN": pin,
-			"Amount": amount
+
 	});
 
 	console.log("Transaction pushed, congratulations!");
@@ -49,7 +49,7 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 
 function verifyTransaction(pan, pin, amount){
 
-	users.on('value', function(snapshot) {
+	users.once('value', function(snapshot) {
 		snapshot.forEach(function(snapChild) {
 
 			let user = snapChild.val().CreditCard
@@ -62,27 +62,16 @@ function verifyTransaction(pan, pin, amount){
 					
 					console.log("PIN is correct");
 
-					if(user.Amount >= amount){
-
-						let int1 = parseInt(user.Amount, 10);
-						let int2 = parseInt(amount, 10);
-						let tempAmount = int1 - int2;
-						let t = '' + tempAmount;						
-
-						console.log("EEEEJ" + typeof(user.Amount) + user.Amount);
-						console.log("EEEEJ" + typeof(amount) + amount);
-						console.log("EEEEJ" + typeof(int1) + int1);
-						console.log("EEEEJ" + typeof(int2) + int2);
-						console.log("EEEEJ" + typeof(tempAmount) + tempAmount);
-
-						//snapChild.child("/CreditCard/Amount").ref.set(t);
-												
+					if(user.Amount >= amount){						
+						
+						substract(user.Amount, amount);
+						snapChild.child("CreditCard/Amount").ref.set(t);
 						console.log("Sufficient funds.");
 						return true;
 
 					} else console.log("Insufficient funds.");
 
-				}	else console.log("Incorrect PIN");
+				} else console.log("Incorrect PIN");
 
 			} else console.log("CorresponNding PAN not found.");
 			
@@ -93,11 +82,12 @@ function verifyTransaction(pan, pin, amount){
 
 
 
+
 // Initial data - run once to fill up DB
 // Fills up DB with two main "tables"
 
-function dataFill(){
-	db.ref('/').set({
+
+/*	db.ref('/').set({
 		users: [
 			{
 				"CreditCard": {
@@ -108,7 +98,8 @@ function dataFill(){
 					"Amount": "216",
 					"Currency": "DKK",
 					"Exp": "01/2020",
-					"PIN": "1234"
+					"PIN": "1234",
+					"Country:": "PL"
 				}
 			},
 			{
@@ -120,7 +111,8 @@ function dataFill(){
 					"Amount": "1228",
 					"Currency": "DKK",
 					"Exp": "05/2021",
-					"PIN": "5685"
+					"PIN": "5685",
+					"Country:": "PL"
 				}
 			},
 			{
@@ -132,14 +124,26 @@ function dataFill(){
 					"Amount": "522",
 					"Currency": "DKK",
 					"Exp": "01/2023",
-					"PIN": "1010"
+					"PIN": "1010",
+					"Country:": "PL"
 				}
 			}
 		],
 		
 		transactions: []
 	});
-}
+transactions.push().set({
+			
+			"Timestamp": "t",
+			"Amount": "2",
+			"Currency": "DKK",
+			"TerminalID": "t",
+			"PAN": "5270820790587748",
+			"PIN": "1234"
+
+	});
+*/
+console.log("Transaction pushed, congratulations!");
 
 
 /*transactions.push().set({
