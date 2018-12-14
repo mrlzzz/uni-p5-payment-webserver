@@ -48,7 +48,7 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 }
 
 function verifyTransaction(pan, pin, amount){
-
+	console.log("Verification loading...");
 	users.once('value', function(snapshot) {
 		snapshot.forEach(function(snapChild) {
 
