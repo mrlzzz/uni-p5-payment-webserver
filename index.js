@@ -64,9 +64,10 @@ function verifyTransaction(pan, pin, amount){
 
 					if(user.Amount >= amount){
 
-						console.log("EEEEEEEEEEEEJ" + typeof user.Amount);
-						console.log("EEEEEEEEEEEEJ" + typeof amount);
-						let tempAmount = user.Amount - amount;
+						let int1 = parseInt(user.Amount, 10);
+						let int2 = parseInt(amount, 10);
+						let tempAmount = int1 - int2;
+						tempAmount.toString();
 						child.child("/CreditCard/Amount").ref.set(tempAmount);
 						console.log("Sufficient funds.");
 
