@@ -49,7 +49,7 @@ function pushTransaction(timestamp, amount, currency, terminalID, pan, pin){
 
 function verifyTransaction(pan, pin, amount){
 
-	users.on('value', function(snapshot) {
+	users.on('child_added', function(snapshot) {
 		snapshot.forEach(function(snapChild) {
 
 			let user = snapChild.val().CreditCard
